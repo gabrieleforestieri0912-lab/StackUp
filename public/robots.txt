@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stackup.academy/sitemap.xml
