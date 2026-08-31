@@ -11,6 +11,26 @@ import {
 } from 'lucide-react';
 
 const Guide: React.FC = () => {
+ const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://stackup.academy').replace(/\/$/, '');
+ const guideItemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: GUIDE_CARDS.map((g, i) => ({
+   '@type': 'ListItem',
+   position: i + 1,
+   name: g.title,
+   url: `${siteUrl}${g.href}`,
+  })),
+ };
+ const guideBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+   { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+   { '@type': 'ListItem', position: 2, name: 'Guide', item: `${siteUrl}/guide` },
+  ],
+ };
+
  return (
  <motion.div
  initial={{ opacity: 0, y: 20 }}
@@ -18,6 +38,8 @@ const Guide: React.FC = () => {
  transition={{ duration: 0.5 }}
   className="max-w-7xl mx-auto px-6 pt-28 pb-16 flex flex-col gap-20"
  >
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(guideItemList).replace(/</g, '\\u003c') }} />
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(guideBreadcrumb).replace(/</g, '\\u003c') }} />
   {/* Hero */}
   <section className="relative">
   <div className="absolute inset-0 bg-orange-500/3 blur-3xl -z-10" />

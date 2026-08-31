@@ -32,8 +32,30 @@ const colorMap: Record<string, { bg: string; text: string; border: string; subtl
 };
 
 const PathsPage = () => {
+  const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://stackup.academy').replace(/\/$/, '');
+  const pathsItemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: PATHS.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.title,
+      url: `${siteUrl}${p.href}`,
+    })),
+  };
+  const pathsBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Percorsi', item: `${siteUrl}/paths` },
+    ],
+  };
+
   return (
     <div className="bg-[#0a0a0a] min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pathsItemList).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pathsBreadcrumb).replace(/</g, '\\u003c') }} />
       <section className="pt-28 pb-20 lg:pb-28 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-orange-500/5 blur-[120px]" />

@@ -1,6 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { supabaseAdmin, getAuthUser } from '@/lib/supabase-admin';
+import { grantCertificate } from '@/lib/certificates';
 
 export const runtime = 'nodejs';
 
@@ -91,26 +92,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const certificateId = crypto.randomUUID();
+    const { granted, certificate } = await grantCertificate(authUser.id, courseId, finalScore);
 
-    const { data, error } = await supabaseAdmin
-      .from('certificates')
-      .insert({
-        certificate_id: certificateId,
-        user_id: authUser.id,
-        course_id: courseId,
-        final_score: finalScore,
-        completed_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
-
-    if (error) {
-      console.error('[certificates] insert error:', error);
-      return NextResponse.json({ message: 'Errore generazione certificato' }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json({ success: true, granted, data: certificate });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json({ success: false, message }, { status: 400 });

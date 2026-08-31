@@ -6,9 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "lint": "eslint"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.2.8",
@@ -34,8 +32,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
     "@types/aos": "^3.0.8",
     "@types/micro": "^7.3.7",
     "@types/node": "^25.9.2",
@@ -46,9 +42,7 @@
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
-    "jsdom": "^29.1.1",
     "tailwindcss": "^4",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "typescript": "^6.0.3"
   }
 }

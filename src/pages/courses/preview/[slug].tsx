@@ -38,6 +38,8 @@ const CoursePreview = () => {
  const slugStr = Array.isArray(slug) ? slug[0] : slug;
  if (!slugStr || !COURSES_DATA[slugStr as keyof typeof COURSES_DATA]) {
  return (
+ <>
+ <SEO title="Corso non trovato" description="Il corso che stai cercando non esiste o non è ancora disponibile." />
  <div className="min-h-screen flex items-center justify-center bg-black">
  <div className="text-center">
  <h1 className="text-3xl font-jakarta font-extrabold text-zinc-100 mb-3">Corso non trovato</h1>
@@ -48,6 +50,7 @@ const CoursePreview = () => {
  </Link>
  </div>
  </div>
+ </>
  );
  }
 

@@ -14,8 +14,8 @@ export default function Document() {
  <NextScript />
  <noscript>
  <div style={{
- position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
- background: '#f8fafc', fontFamily: 'system-ui, sans-serif', textAlign: 'center', padding: 20
+  position: 'fixed', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
+  background: '#f8fafc', fontFamily: 'system-ui, sans-serif', textAlign: 'center', padding: 20
  }}>
  <div>
  <h1 style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginBottom: 8 }}>StackUp</h1>

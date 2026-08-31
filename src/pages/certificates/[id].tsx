@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../context/AuthContext';
+import { getAccessToken } from '../../lib/auth-token';
 import SEO from '../../components/ui/SEO';
 import { Loader2, Printer, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -52,7 +53,7 @@ const CertificateView: React.FC = () => {
 
  const fetchCert = async (): Promise<void> => {
  try {
- const token = localStorage.getItem('token');
+ const token = await getAccessToken();
  const res = await fetch('/api/certificates', {
  headers: { Authorization: `Bearer ${token}` },
  });
@@ -78,23 +79,29 @@ const CertificateView: React.FC = () => {
 
  if (authLoading || loading) {
  return (
+ <>
+ <SEO title="Certificato - StackUp" description="Certificato di completamento StackUp." />
  <div className="min-h-screen flex items-center justify-center bg-black">
  <div className="flex flex-col items-center gap-4">
  <Loader2 className="w-10 h-10 text-orange-600 animate-spin" />
  <p className="text-sm font-bold text-zinc-400">Caricamento certificato...</p>
  </div>
  </div>
+ </>
  );
  }
 
  if (error || !cert) {
  return (
+ <>
+ <SEO title="Certificato - StackUp" description="Certificato di completamento StackUp." />
  <div className="min-h-screen flex flex-col items-center justify-center bg-black gap-6">
  <p className="text-red-500 font-bold">{error || 'Certificato non trovato'}</p>
  <Link href="/certificates" className="px-6 py-3 bg-black text-white font-bold hover:bg-orange-600 transition-all">
  Torna ai certificati
  </Link>
  </div>
+ </>
  );
  }
 

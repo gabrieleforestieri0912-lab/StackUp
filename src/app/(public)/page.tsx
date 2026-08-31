@@ -55,9 +55,45 @@ function highlightText(text: string) {
   });
 }
 
+function faqJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+}
+
+function coursesItemListJsonLd() {
+  const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://stackup.academy').replace(/\/$/, '');
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: COURSES_PREVIEW.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.title,
+      url: `${siteUrl}/courses/${c.id}`,
+    })),
+  };
+}
+
 const Home: React.FC = () => {
   return (
     <div className="bg-[#0a0a0a] min-h-screen overflow-x-hidden">
+      {/* JSON-LD: FAQ (AEO/GEO) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd()).replace(/</g, '\\u003c') }}
+      />
+      {/* JSON-LD: catalogo corsi in evidenza */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(coursesItemListJsonLd()).replace(/</g, '\\u003c') }}
+      />
       {/* ===== HERO ===== */}
       <section className="relative pt-24 pb-8 lg:pt-32 lg:pb-16 overflow-hidden">
         <div className="absolute inset-0 -z-10">
@@ -204,7 +240,7 @@ const Home: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-jakarta font-black text-white tracking-tight">
               Strumenti e <span className="text-orange-400">Risorse.</span>
             </h2>
-            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4 max-w-xl mx-auto">
+            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4">
               Link diretti a strumenti e documentazione che userai ogni giorno.
             </p>
             <Link
@@ -222,7 +258,7 @@ const Home: React.FC = () => {
                 <Link
                   key={i}
                   href={res.href}
-                  className={`group flex items-start gap-5 px-6 py-7 bg-zinc-950 hover:bg-zinc-900/60 transition-colors duration-200 no-underline ${
+                  className={`group flex flex-wrap items-start gap-5 px-6 py-7 bg-zinc-950 hover:bg-zinc-900/60 transition-colors duration-200 no-underline ${
                     i < SHIP_RESOURCES.length - 1
                       ? "border-b border-zinc-800"
                       : ""
@@ -245,7 +281,7 @@ const Home: React.FC = () => {
                       {res.desc}
                     </p>
                   </div>
-                  <div className="flex flex-col items-end gap-2 shrink-0 ml-4 mt-1">
+                  <div className="flex flex-col items-end gap-2 shrink-0 w-full sm:w-auto sm:ml-4 mt-1">
                     <p className="text-xs text-zinc-500 text-right max-w-[200px] leading-snug flex items-start gap-1.5">
                       <Lock size={11} className="shrink-0 mt-0.5" />
                       {res.memberNote}
@@ -376,7 +412,7 @@ const Home: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-jakarta font-black text-white tracking-tight">
               Corsi <span className="text-orange-400">professionali.</span>
             </h2>
-            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4 max-w-xl mx-auto">
+            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4">
               Dal frontend al backend, dall'AI al mobile: il percorso giusto per ogni developer.
             </p>
             <Link
@@ -971,7 +1007,7 @@ const Home: React.FC = () => {
               Guide pratiche per{" "}
               <span className="text-orange-400">sviluppare.</span>
             </h2>
-            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4 max-w-2xl mx-auto">
+            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4">
               Dalla teoria al codice: guide pratiche per costruire, lanciare e monetizzare la tua idea.
             </p>
           </motion.div>
@@ -1036,7 +1072,7 @@ const Home: React.FC = () => {
               Percorsi di{" "}
               <span className="text-orange-400">carriera.</span>
             </h2>
-            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4 max-w-xl mx-auto">
+            <p className="text-zinc-400 font-medium text-base sm:text-lg mt-4">
               Scegli il tuo percorso e diventa membro per sbloccare tutto.
             </p>
           </motion.div>
@@ -1108,7 +1144,7 @@ const Home: React.FC = () => {
             transition={{ duration: 0.4, delay: 0.15 }}
             className="text-center"
           >
-            <p className="text-zinc-400 font-medium text-base mb-6 max-w-xl mx-auto">
+            <p className="text-zinc-400 font-medium text-base mb-6">
               Vuoi il piano completo in 6 step per lanciare la tua Startup AI da solo?
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">

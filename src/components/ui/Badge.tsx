@@ -23,7 +23,7 @@ const Badge: React.FC<BadgeProps> = ({ children, className = '', small = false, 
     );
   }
   return (
-    <span className={`w-fit px-4 py-4 md:px-6 md:py-6 bg-[#111111] border border-white/8 rounded-lg text-balance text-2xl font-bold tracking-tight text-white md:text-5xl ${className}`}>
+    <span className={`inline-block w-fit px-4 py-4 md:px-6 md:py-6 bg-[#111111] border border-white/8 rounded-lg text-balance text-2xl font-bold tracking-tight text-white md:text-5xl ${className}`}>
       {children}
     </span>
   );

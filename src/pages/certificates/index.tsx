@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { getAccessToken } from '../../lib/auth-token';
 import { useRouter } from 'next/router';
 import SEO from '../../components/ui/SEO';
 import Link from 'next/link';
@@ -158,7 +159,7 @@ const CertificatesPage: React.FC = () => {
  const fetchCertificates = async (): Promise<void> => {
  if (!user) return;
  try {
- const token = localStorage.getItem('token');
+ const token = await getAccessToken();
  const res = await fetch('/api/certificates', {
  headers: { Authorization: `Bearer ${token}` },
  });
@@ -184,6 +185,8 @@ const CertificatesPage: React.FC = () => {
 
  if (authLoading || (loading && user)) {
  return (
+ <>
+ <SEO title="I tuoi Certificati" description="Visualizza e scarica i tuoi certificati di completamento su StackUp." url="/certificates" />
  <div className="min-h-screen bg-black">
  <div className="max-w-7xl mx-auto pt-28 md:pt-32 px-6 sm:px-10 lg:px-12 pb-20">
  <div className="flex gap-10">
@@ -210,10 +213,11 @@ const CertificatesPage: React.FC = () => {
  </div>
  </div>
  </div>
+ </>
  );
  }
 
- if (!user) return null;
+ if (!user) return <SEO title="I tuoi Certificati" description="Visualizza e scarica i tuoi certificati di completamento su StackUp." url="/certificates" />;
 
  return (
  <div className="min-h-screen bg-black">

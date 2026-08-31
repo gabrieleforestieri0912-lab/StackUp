@@ -14,8 +14,6 @@ const jetbrainsMono = JetBrains_Mono({
  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
-import { HelmetProvider } from "react-helmet-async";
-
 import { useRouter } from "next/router";
 
 import SEO from "../components/ui/SEO";
@@ -27,7 +25,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
  return (
  <div className={`${jetbrainsMono.variable} flex flex-col min-h-screen bg-black text-zinc-100`}>
- <HelmetProvider>
  <AuthProvider>
  {!isNoLayoutPage && <Navbar />}
   <Toaster
@@ -52,7 +49,6 @@ export default function App({ Component, pageProps }: AppProps) {
  </main>
  {!isNoLayoutPage && <Footer />}
  </AuthProvider>
- </HelmetProvider>
  </div>
  );
 }

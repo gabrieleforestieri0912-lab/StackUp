@@ -23,11 +23,21 @@ interface Hint {
  order?: number;
 }
 
+interface CommonError {
+ error: string;
+ fix: string;
+}
+
 interface Exercise {
  _id?: string;
  title: string;
  description?: string;
+ why?: string;
+ how?: string;
  instructions: string;
+ commonErrors?: CommonError[];
+ checkpoint?: string;
+ isCheckpoint?: boolean;
  starterCode?: string;
  solution?: string;
  testCases?: TestCase[];
@@ -399,12 +409,53 @@ const ExerciseComponent = ({ exercise, onComplete, onClose }: ExerciseComponentP
     <div className="flex flex-col lg:flex-row h-[calc(90vh-80px)]">
      {/* Left Panel - Instructions */}
      <div className="lg:w-1/3 p-6 border-r border-zinc-800 overflow-y-auto">
+      {exercise.isCheckpoint && (
+       <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-orange-500/10 border border-orange-500/30 text-orange-300 text-[10px] font-black uppercase tracking-widest rounded-lg mb-4">
+        <Trophy size={11} /> Checkpoint del modulo
+       </span>
+      )}
+
+      {exercise.why && (
+       <div className="mb-5">
+        <h4 className="text-xs font-black text-orange-400 uppercase tracking-widest mb-1.5">Perché</h4>
+        <p className="text-zinc-300 leading-relaxed text-sm">{exercise.why}</p>
+       </div>
+      )}
+
+      {exercise.how && (
+       <div className="mb-5">
+        <h4 className="text-xs font-black text-orange-400 uppercase tracking-widest mb-1.5">Come</h4>
+        <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-line">{exercise.how}</p>
+       </div>
+      )}
+
       <h3 className="text-lg font-bold text-zinc-100 mb-4">Istruzioni</h3>
       <div className="prose prose-slate max-w-none">
        <p className="text-zinc-300 leading-relaxed whitespace-pre-line">
         {exercise.instructions}
        </p>
       </div>
+
+      {exercise.checkpoint && (
+       <div className="mt-6 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
+        <h4 className="text-xs font-black text-emerald-400 uppercase tracking-widest mb-1.5">Come capire se è giusto</h4>
+        <p className="text-sm text-zinc-300 leading-relaxed">{exercise.checkpoint}</p>
+       </div>
+      )}
+
+      {exercise.commonErrors && exercise.commonErrors.length > 0 && (
+       <div className="mt-6">
+        <h4 className="text-xs font-black text-amber-400 uppercase tracking-widest mb-2">Errori comuni</h4>
+        <div className="space-y-2">
+         {exercise.commonErrors.map((err, index) => (
+          <div key={index} className="p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl">
+           <p className="text-sm font-bold text-zinc-200 mb-0.5">{err.error}</p>
+           <p className="text-sm text-zinc-400">{err.fix}</p>
+          </div>
+         ))}
+        </div>
+       </div>
+      )}
 
       {/* Test Cases */}
       {exercise.testCases && exercise.testCases.length > 0 && (

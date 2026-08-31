@@ -86,6 +86,8 @@ const MyCourses: React.FC = () => {
 
  if (loading || auth === null) {
  return (
+ <>
+ <SEO title="I Miei Corsi" description="Accedi ai tuoi corsi acquistati su StackUp." url="/my-courses" />
  <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-20 px-6">
  <div className="max-w-6xl mx-auto space-y-10">
  <div className="space-y-4">
@@ -102,14 +104,14 @@ const MyCourses: React.FC = () => {
  <div className="h-10 w-full skeleton rounded-lg" />
  </div>
  </div>
- ))}
+ ))}   </div>
+   </div>
  </div>
- </div>
- </div>
+ </>
  );
  }
 
- if (!user) return null;
+ if (!user) return <SEO title="I Miei Corsi" description="Accedi ai tuoi corsi acquistati su StackUp." url="/my-courses" />;
 
  return (
  <motion.div

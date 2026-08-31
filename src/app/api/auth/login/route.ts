@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
         createdAt: profile.created_at,
       },
       token,
+      refreshToken: signInData.session?.refresh_token ?? '',
     });
   } catch (error) {
     console.error('[login] error:', error);

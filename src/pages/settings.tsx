@@ -1,5 +1,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { getAccessToken } from '../lib/auth-token';
 import { useRouter } from 'next/router';
 import SEO from '../components/ui/SEO';
 import Link from 'next/link';
@@ -68,9 +69,9 @@ const SettingsPage: React.FC = () => {
  e.preventDefault();
  setSavingProfile(true);
  try {
- const token = localStorage.getItem('token');
+ const token = await getAccessToken();
  const res = await fetch('/api/auth/update-profile', {
- method: 'PUT',
+ method: 'POST',
  headers: {
  'Content-Type': 'application/json',
  Authorization: `Bearer ${token}`,
@@ -92,9 +93,9 @@ const SettingsPage: React.FC = () => {
  e.preventDefault();
  setSavingPassword(true);
  try {
- const token = localStorage.getItem('token');
+ const token = await getAccessToken();
  const res = await fetch('/api/auth/change-password', {
- method: 'PUT',
+ method: 'POST',
  headers: {
  'Content-Type': 'application/json',
  Authorization: `Bearer ${token}`,
@@ -115,6 +116,8 @@ const SettingsPage: React.FC = () => {
 
   if (authLoading || !user) {
   return (
+  <>
+  <SEO title="Impostazioni" description="Gestisci le tue impostazioni su StackUp." />
   <div className="min-h-screen bg-black flex">
   <aside className="hidden lg:flex w-72 bg-zinc-900/30 border-r border-zinc-800 flex-col sticky top-0 h-screen pt-20">
   <div className="px-6 py-8 space-y-6">
@@ -137,6 +140,7 @@ const SettingsPage: React.FC = () => {
   </div>
   </main>
   </div>
+  </>
   );
   }
 

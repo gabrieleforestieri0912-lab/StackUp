@@ -30,6 +30,22 @@ export interface AuthContextType {
  refreshUser: () => Promise<void>;
 }
 
+const TOKEN_KEY = 'token';
+
+/** Persiste (o rimuove) il token di sessione in localStorage. */
+function persistToken(token?: string | null) {
+  if (typeof window === 'undefined') return;
+  try {
+    if (token) {
+      localStorage.setItem(TOKEN_KEY, token);
+    } else {
+      localStorage.removeItem(TOKEN_KEY);
+    }
+  } catch {
+    // localStorage non disponibile: ignora
+  }
+}
+
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -40,15 +56,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const init = async () => {
    const { data: { session } } = await supabase.auth.getSession();
    if (session?.access_token) {
+    persistToken(session.access_token);
     await fetchUser(session.access_token);
+   } else {
+    // Nessuna sessione Supabase: pulisce eventuali token orfani
+    persistToken();
    }
    setLoading(false);
   };
 
   const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
    if (event === 'SIGNED_IN' && session?.access_token) {
+    persistToken(session.access_token);
     await fetchUser(session.access_token);
    } else if (event === 'SIGNED_OUT') {
+    persistToken();
     setUser(null);
    }
   });
@@ -71,6 +93,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
  };
 
+ /** Stabilisce la sessione Supabase nel browser e persiste il token. */
+ const establishSession = useCallback(async (accessToken: string, refreshToken?: string) => {
+  persistToken(accessToken);
+  if (refreshToken) {
+   try {
+    await supabase.auth.setSession({
+     access_token: accessToken,
+     refresh_token: refreshToken,
+    });
+   } catch (err) {
+    console.error('setSession failed (token comunque persistito):', err);
+   }
+  }
+ }, []);
+
  const login = useCallback(async (email: string, password: string) => {
   const response = await fetch('/api/auth/login', {
    method: 'POST',
@@ -80,10 +117,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || 'Login fallito');
 
+  if (data.token) {
+   await establishSession(data.token, data.refreshToken);
+  }
   setUser(data.user);
   toast.success(`Bentornato, ${data.user.name}!`);
   return data.user as User;
- }, []);
+ }, [establishSession]);
 
  const register = useCallback(async (name: string, email: string, password: string) => {
   const response = await fetch('/api/auth/register', {
@@ -94,12 +134,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || 'Errore durante la registrazione');
 
+  if (data.token) {
+   await establishSession(data.token, data.refreshToken);
+  }
   setUser(data.user);
   toast.success(`Account creato! Benvenuto ${name}`);
   return data.user as User;
- }, []);
+ }, [establishSession]);
 
- const completeOAuthLogin = useCallback((userData: User, _token: string) => {
+ const completeOAuthLogin = useCallback(async (userData: User, _token: string) => {
+  // Dopo il redirect OAuth la sessione è già nel client Supabase
+  try {
+   const { data: { session } } = await supabase.auth.getSession();
+   persistToken(session?.access_token);
+  } catch {
+   // ignora: il token verrà ripristinato dal primo evento SIGNED_IN
+  }
   setUser(userData);
   toast.success(`Bentornato, ${userData.name}!`);
  }, []);
@@ -112,6 +162,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
  const logout = useCallback(async () => {
   setUser(null);
+  persistToken();
   await supabase.auth.signOut();
   toast.success('Sessione chiusa');
   window.location.href = '/login';

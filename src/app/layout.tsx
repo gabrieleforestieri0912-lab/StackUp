@@ -4,6 +4,8 @@ import './globals.css';
 import Providers from './providers';
 import Analytics from '@/components/ui/Analytics';
 import ErrorBoundary from '@/components/ui/ErrorBoundary';
+import JsonLd from '@/components/ui/JsonLd';
+import { SITE_NAME, SITE_TAGLINE, organizationJsonLd, websiteJsonLd, siteUrl, absUrl } from '@/lib/seo';
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -12,33 +14,61 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+const baseUrl = siteUrl();
 
 export const metadata: Metadata = {
-  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  metadataBase: new URL(baseUrl),
   title: {
     default: 'StackUp Room | Master Your Code',
     template: '%s | StackUp Room',
   },
-  description:
-    'La community dove imparare a programmare sul serio. Corsi di React, Next.js, Node.js, Python, TypeScript e tanto altro con mentorship 1:1.',
+  description: SITE_TAGLINE,
+  keywords: [
+    'corsi programmazione',
+    'imparare a programmare',
+    'corso React',
+    'corso Next.js',
+    'corso Node.js',
+    'corso Python',
+    'corso TypeScript',
+    'mentoring programmazione',
+    'coding bootcamp italiano',
+    'sviluppatore web',
+    'StackUp Room',
+  ],
+  applicationName: SITE_NAME,
+  authors: [{ name: 'Gabriele Forestieri' }],
+  category: 'technology',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [{ url: '/stackup.png', type: 'image/png' }],
   },
   openGraph: {
     type: 'website',
-    siteName: 'StackUp Room',
+    siteName: SITE_NAME,
+    locale: 'it_IT',
+    url: baseUrl,
     title: 'StackUp Room | Master Your Code',
-    description:
-     'La community dove imparare a programmare sul serio. Corsi di React, Next.js, Node.js, Python, TypeScript e tanto altro con mentorship 1:1.',
-    images: [{ url: '/stackup-og.svg' }],
+    description: SITE_TAGLINE,
+    images: [{ url: absUrl('/stackup-og.svg'), width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'StackUp Room | Master Your Code',
-    description:
-     'La community dove imparare a programmare sul serio. Corsi di React, Next.js, Node.js, Python, TypeScript e tanto altro con mentorship 1:1.',
-    images: ['/stackup-og.svg'],
+    description: SITE_TAGLINE,
+    images: [absUrl('/stackup-og.svg')],
   },
 };
 
@@ -52,6 +82,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="it"
       className={`${jetbrainsMono.variable}`}
     >
+      <head>
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
+        <link rel="alternate" type="text/plain" href="/llms.txt" title={`${SITE_NAME} llms.txt`} />
+      </head>
       <body className="antialiased h-full min-h-full bg-black text-zinc-100 overflow-x-hidden w-full max-w-100vw">
         <Analytics />
         <ErrorBoundary>

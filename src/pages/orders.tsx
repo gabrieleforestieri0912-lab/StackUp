@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, ShoppingBag, Clock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { getAccessToken } from '../lib/auth-token';
 
 interface OrderItem {
  title: string;
@@ -44,7 +45,7 @@ const OrdersPage: React.FC = () => {
  setLoading(true);
  setError(null);
  try {
- const token = localStorage.getItem('token');
+ const token = await getAccessToken();
  const response = await fetch('/api/orders', {
  headers: { Authorization: `Bearer ${token}` },
  });
@@ -64,17 +65,22 @@ const OrdersPage: React.FC = () => {
 
  if (loading) {
  return (
+ <>
+ <SEO title="I tuoi Ordini" description="Visualizza la cronologia dei tuoi acquisti su StackUp." url="/orders" />
  <div className="min-h-screen flex items-center justify-center bg-black">
  <div className="flex flex-col items-center gap-4">
  <div className="w-10 h-10 border-4 border-orange-600 border-t-transparent animate-spin" />
  <p className="text-sm font-bold text-zinc-400">Caricamento ordini...</p>
  </div>
  </div>
+ </>
  );
  }
 
  if (error) {
  return (
+ <>
+ <SEO title="I tuoi Ordini" description="Visualizza la cronologia dei tuoi acquisti su StackUp." url="/orders" />
  <div className="min-h-screen flex items-center justify-center bg-black">
  <div className="text-center">
  <p className="text-red-500 font-bold mb-4">{error}</p>
@@ -83,6 +89,7 @@ const OrdersPage: React.FC = () => {
  </button>
  </div>
  </div>
+ </>
  );
  }
 

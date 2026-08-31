@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import SEO from '../components/ui/SEO';
+import { getAccessToken } from '../lib/auth-token';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -168,6 +169,7 @@ const Dashboard: React.FC = () => {
   const user = auth?.user;
   const logout = auth?.logout;
   const authLoading = auth?.loading;
+  const refreshUser = auth?.refreshUser;
   const router = useRouter();
   const { pathname } = router;
   const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
@@ -181,12 +183,38 @@ const Dashboard: React.FC = () => {
     }
   }, [user, authLoading, auth, router]);
 
+  // Aggiorna XP / livello / streak in tempo reale:
+  // al ritorno sulla scheda (focus) e periodicamente.
+  useEffect(() => {
+    if (!refreshUser) return;
+
+    const onFocus = () => {
+      refreshUser();
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') refreshUser();
+    };
+
+    window.addEventListener('focus', onFocus);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    const interval = setInterval(() => {
+      refreshUser();
+    }, 30000);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      document.removeEventListener('visibilitychange', onVisibility);
+      clearInterval(interval);
+    };
+  }, [refreshUser]);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!user) return;
 
       try {
-        const token = localStorage.getItem('token');
+        const token = await getAccessToken();
 
         const [coursesRes, ordersRes] = await Promise.all([
           fetch('/api/courses'),
@@ -217,13 +245,13 @@ const Dashboard: React.FC = () => {
     if (user) {
       fetchData();
     }
-
-    setSidebarOpen(false);
   }, [user]);
 
   if (authLoading || (loading && user)) {
     return (
-      <div className="min-h-screen bg-black">
+      <>
+        <SEO title="Dashboard" description="Gestisci i tuoi corsi e i tuoi progressi su StackUp." />
+        <div className="min-h-screen bg-black">
         <div className="max-w-7xl mx-auto pt-28 md:pt-32 px-6 sm:px-10 lg:px-12 pb-20">
           <div className="flex gap-10">
             <aside className="hidden lg:block w-64 shrink-0">
@@ -267,10 +295,11 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
-  if (!user || !logout) return null;
+  if (!user || !logout) return <SEO title="Dashboard" description="Gestisci i tuoi corsi e i tuoi progressi su StackUp." />;
 
   const completedCourses = enrolledCourses.filter(c => c.progress && c.progress >= 80);
   const today = new Date().toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });

@@ -61,16 +61,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Errore creazione profilo' }, { status: 500 });
     }
 
-    // Genera sessione per il nuovo utente così il client può fare login automatico.
-    const { data: sessionData, error: sessionError } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'magiclink',
+    // Crea una sessione immediata per il nuovo utente così il client
+    // può fare login automatico (l'email è già confermata da createUser).
+    const { data: sessionData, error: sessionError } = await supabaseAdmin.auth.signInWithPassword({
       email: emailLower,
-      options: { redirectTo: process.env.NEXT_PUBLIC_APP_URL || '' },
+      password,
     });
 
     if (sessionError) {
-      console.warn('[register] generateLink error (non bloccante):', sessionError);
+      console.warn('[register] signInWithPassword error (non bloccante):', sessionError);
     }
+
+    const token = sessionData?.session?.access_token ?? '';
+    const refreshToken = sessionData?.session?.refresh_token ?? '';
 
     return NextResponse.json({
       user: {
@@ -87,9 +90,9 @@ export async function POST(req: NextRequest) {
         exp: 0,
         createdAt: profile.created_at,
       },
-      token: '',
-      magicLink: sessionData?.properties?.action_link,
-      requiresEmailConfirmation: true,
+      token,
+      refreshToken,
+      requiresEmailConfirmation: false,
     });
   } catch (error) {
     console.error('[register] error:', error);

@@ -1,7 +1,5 @@
-'use client';
-
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import Head from 'next/head';
 
 interface SEOProps {
  title?: string;
@@ -21,8 +19,7 @@ const SEO = ({ title, description, keywords, image, url }: SEOProps) => {
   const canonicalUrl = `${baseUrl}${url || ''}`;
 
  return (
-  <Helmet>
-   {/* Basic Meta Tags */}
+  <Head>
    <title>{fullTitle}</title>
    <meta name="description" content={metaDescription} />
    <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -44,7 +41,7 @@ const SEO = ({ title, description, keywords, image, url }: SEOProps) => {
    <meta name="twitter:title" content={fullTitle} />
    <meta name="twitter:description" content={metaDescription} />
    <meta name="twitter:image" content={image || "/stackup-og.png"} />
-  </Helmet>
+  </Head>
  );
 };
 

@@ -5,12 +5,6 @@ import { supabaseAdmin, getAuthUser } from '../../../../lib/supabase-admin';
 
 export const runtime = 'nodejs';
 
-interface CartItem {
-  courseId: string;
-  title: string;
-  amount: number;
-}
-
 export async function POST(req: NextRequest) {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey || stripeKey === 'sk_test_your_stripe_key') {
@@ -29,20 +23,23 @@ export async function POST(req: NextRequest) {
   }
 
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
-  const items = Array.isArray(body.items)
-    ? (body.items as CartItem[]).filter(
-        (i) =>
-          i &&
-          typeof i.courseId === 'string' &&
-          typeof i.title === 'string' &&
-          typeof i.amount === 'number' &&
-          i.amount > 0,
-      )
-    : [];
 
-  const courseId = typeof body.courseId === 'string' ? body.courseId : '';
+  // Il client può indicare SOLO gli id dei corsi (singolo o carrello).
+  // Prezzo e titolo vengono SEMPRE letti dal database: mai dal client.
+  const rawItems = Array.isArray(body.items) ? (body.items as Array<Record<string, unknown>>) : [];
+  const singleCourseId = typeof body.courseId === 'string' ? body.courseId : '';
 
-  if (items.length === 0 && !courseId) {
+  const requestedIds = [
+    ...new Set(
+      singleCourseId
+        ? [singleCourseId]
+        : rawItems
+            .map((i) => (i && typeof i.courseId === 'string' ? i.courseId : ''))
+            .filter(Boolean),
+    ),
+  ];
+
+  if (requestedIds.length === 0) {
     return NextResponse.json({ message: 'Nessun corso selezionato' }, { status: 400 });
   }
 
@@ -50,47 +47,44 @@ export async function POST(req: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const stripe = new Stripe(stripeKey);
 
-    type LineItem = {
-      price_data: { currency: string; product_data: { name: string }; unit_amount: number };
-      quantity: number;
-    };
-    let line_items: LineItem[] = [];
-    let courseIdsMeta: string[] = [];
+    const { data: courses, error: coursesError } = await supabaseAdmin
+      .from('courses')
+      .select('id, title, price')
+      .in('id', requestedIds)
+      .eq('is_published', true);
 
-    if (items.length > 0) {
-      line_items = items.map((item) => ({
-        price_data: {
-          currency: 'eur',
-          product_data: { name: item.title },
-          unit_amount: Math.round(item.amount * 100),
-        },
-        quantity: 1,
-      }));
-      courseIdsMeta = items.map((i) => i.courseId);
-    } else if (courseId) {
-      // Singolo corso: recupera titolo e prezzo da Supabase
-      const { data: course } = await supabaseAdmin
-        .from('courses')
-        .select('title, price')
-        .eq('id', courseId)
-        .maybeSingle();
-
-      if (!course) {
-        return NextResponse.json({ message: 'Corso non trovato' }, { status: 404 });
-      }
-
-      line_items = [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: { name: course.title },
-            unit_amount: Math.round(course.price * 100),
-          },
-          quantity: 1,
-        },
-      ];
-      courseIdsMeta = [courseId];
+    if (coursesError) {
+      console.error('[create-checkout] courses query error:', coursesError);
+      return NextResponse.json({ message: 'Errore durante la creazione del checkout' }, { status: 500 });
     }
+
+    if (!courses || courses.length === 0) {
+      return NextResponse.json(
+        { message: 'Corso non trovato o non disponibile' },
+        { status: 404 },
+      );
+    }
+
+    // Esclude i corsi gratuiti: non si acquistano via Stripe
+    const paidCourses = courses.filter((c) => Number(c.price) > 0);
+
+    if (paidCourses.length === 0) {
+      return NextResponse.json(
+        { message: 'I corsi selezionati sono gratuiti: non serve acquistarli' },
+        { status: 400 },
+      );
+    }
+
+    const line_items = paidCourses.map((course) => ({
+      price_data: {
+        currency: 'eur',
+        product_data: { name: course.title },
+        unit_amount: Math.round(Number(course.price) * 100),
+      },
+      quantity: 1,
+    }));
+
+    const courseIdsMeta = paidCourses.map((c) => c.id);
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',

@@ -13,6 +13,26 @@ import Badge from '@/components/ui/Badge';
 import { RESOURCE_HUBS, ALL_RESOURCES } from '@/data/landingData';
 
 const ResourcesPage: React.FC = () => {
+  const siteUrl = (process.env.NEXT_PUBLIC_APP_URL || 'https://stackup.academy').replace(/\/$/, '');
+  const resourcesItemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: ALL_RESOURCES.map((r, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: r.title,
+      url: `${siteUrl}${r.href}`,
+    })),
+  };
+  const resourcesBreadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Risorse', item: `${siteUrl}/resources` },
+    ],
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -20,6 +40,8 @@ const ResourcesPage: React.FC = () => {
       transition={{ duration: 0.5 }}
       className="max-w-7xl mx-auto px-6 pt-20 sm:pt-24 pb-12 sm:pb-16 flex flex-col gap-24"
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(resourcesItemList).replace(/</g, '\\u003c') }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(resourcesBreadcrumb).replace(/</g, '\\u003c') }} />
       {/* Resource Hubs */}
       <section className="relative text-left">
         <div className="absolute inset-0 bg-orange-500/3 blur-3xl -z-10" />
