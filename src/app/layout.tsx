@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import Providers from './providers';
 import Analytics from '@/components/ui/Analytics';
@@ -89,6 +91,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased h-full min-h-full bg-black text-zinc-100 overflow-x-hidden w-full max-w-100vw">
         <Analytics />
+        <VercelAnalytics />
+        <SpeedInsights />
         <ErrorBoundary>
           <Providers>{children}</Providers>
         </ErrorBoundary>

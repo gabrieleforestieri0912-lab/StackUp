@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app";
 import { JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
@@ -25,6 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
  return (
  <div className={`${jetbrainsMono.variable} flex flex-col min-h-screen bg-black text-zinc-100`}>
+ <Analytics />
+ <SpeedInsights />
  <AuthProvider>
  {!isNoLayoutPage && <Navbar />}
   <Toaster
