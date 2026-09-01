@@ -84,8 +84,11 @@ const SUPPORTED_LANGUAGES: LanguageOption[] = [
  { id: 'nextjs', name: 'Next.js ▲', type: 'framework' },
  { id: 'angular', name: 'Angular ❤️', type: 'framework' },
  { id: 'vue', name: 'Vue.js 💚', type: 'framework' },
- { id: 'svelte', name: 'Svelte 🧡', type: 'framework' },
- { id: 'astro', name: 'Astro 🚀', type: 'framework' }
+  { id: 'svelte', name: 'Svelte 🧡', type: 'framework' },
+  { id: 'astro', name: 'Astro 🚀', type: 'framework' },
+  { id: 'sql', name: 'SQL 🗄️', type: 'language' },
+  { id: 'go', name: 'Go ⚓', type: 'language' },
+  { id: 'bash', name: 'Bash/Terminale 💻', type: 'language' }
 ];
 
 const ExerciseComponent = ({ exercise, onComplete, onClose }: ExerciseComponentProps) => {
@@ -113,6 +116,11 @@ const ExerciseComponent = ({ exercise, onComplete, onClose }: ExerciseComponentP
   if ((codeStr.includes('<script>') && codeStr.includes('export let')) || codeStr.includes('$: ') || codeStr.includes('bind:value')) return 'svelte';
   if (codeStr.startsWith('---') && codeStr.includes('---')) return 'astro';
   if (codeStr.includes('export const getServerSideProps') || codeStr.includes('use client') || codeStr.includes('getServerSideProps')) return 'nextjs';
+
+  // SQL / Go / Bash commands
+  if (/\b(SELECT\b|INSERT\s+INTO|UPDATE\s+\w+\s+SET|CREATE\s+TABLE|CREATE\s+INDEX|DELETE\s+FROM|ALTER\s+TABLE|JOIN\b)/i.test(codeStr)) return 'sql';
+  if (codeStr.includes('package main') || codeStr.includes('func ') || codeStr.includes('fmt.') || codeStr.includes(':=')) return 'go';
+  if (codeStr.includes('#!') || /^\s*(git|docker|docker-compose|npm|npx|pnpm|yarn|curl|psql|kubectl|vercel|heroku|ls|mkdir|cd)\s+/m.test(codeStr)) return 'bash';
 
   // Fallback languages
   if (codeStr.includes('def ') && codeStr.endsWith('end')) return 'ruby';
@@ -163,7 +171,17 @@ const ExerciseComponent = ({ exercise, onComplete, onClose }: ExerciseComponentP
 
       let fullCode = code;
       if (testCase.input) {
-       fullCode += `\nreturn ${testCase.input};`;
+       // Supporta sia una singola espressione sia una sequenza di istruzioni:
+       // aggiunge return solo all'ultima espressione. Es. "const c = f(); c.get()"
+       // diventa "const c = f(); return (c.get());".
+       const lastSemicolon = testCase.input.lastIndexOf(';');
+       if (lastSemicolon === -1) {
+        fullCode += `\nreturn (${testCase.input});`;
+       } else {
+        const head = testCase.input.slice(0, lastSemicolon + 1);
+        const lastExpr = testCase.input.slice(lastSemicolon + 1).trim();
+        fullCode += `\n${head}\nreturn (${lastExpr});`;
+       }
       }
 
       // Blocco pattern pericolosi noti che potrebbero esfiltrare dati
@@ -209,112 +227,18 @@ const ExerciseComponent = ({ exercise, onComplete, onClose }: ExerciseComponentP
         actual = execErr instanceof Error ? execErr.message : 'Errore di esecuzione';
        }
       }
-     } else if (lang === 'python') {
-      // Python simple transpilation
-      let jsCode = code
-       .replace(/#.*/g, '') // Remove comments
-       .replace(/def\s+(\w+)\(([^)]*)\):/g, 'function $1($2) {')
-       .replace(/return\s+(.*)/g, 'return $1; }')
-       .replace(/print\((.*)\)/g, 'console.log($1)');
-
-      if (jsCode.includes('function ') && !jsCode.includes('}')) {
-       jsCode += '\n}';
+      } else {
+       // Pattern-based: il codice scritto dall'utente deve contenere il
+       // costrutto richiesto (testCase.expectedOutput). Raccoglie tutte le
+       // lingue non realmente eseguibili dal browser: python, php, c, csharp,
+       // perl, ruby, lua, java, cpp, css, html, nextjs, angular, vue, svelte,
+       // astro, sql, go e bash.
+       const cleanedUser = code.replace(/\s+/g, ' ').trim().toLowerCase();
+       const cleanedExpected = (testCase.expectedOutput || '').replace(/\s+/g, ' ').trim().toLowerCase();
+       passed = cleanedExpected === '' || cleanedUser.includes(cleanedExpected);
+       actual = code.trim();
       }
-
-      let logs: string[] = [];
-      const customConsole = {
-       log: (...args: unknown[]) => logs.push(args.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ')),
-       info: (...args: unknown[]) => logs.push(args.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ')),
-       warn: (...args: unknown[]) => logs.push(args.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' ')),
-       error: (...args: unknown[]) => logs.push(args.map(x => typeof x === 'object' ? JSON.stringify(x) : String(x)).join(' '))
-      };
-
-      let fullCode = jsCode;
-      if (testCase.input) {
-       fullCode += `\nreturn ${testCase.input};`;
-      }
-
-      const fn = new Function('console', fullCode);
-      const result = fn(customConsole);
-
-      if (logs.length > 0) {
-       actual = logs.join('\n').trim();
-      } else if (result !== undefined) {
-       actual = String(result).trim();
-      }
-
-      passed = actual === String(testCase.expectedOutput).trim();
-     } else if (lang === 'php') {
-      const hasTag = code.includes('<?php');
-      const hasEcho = code.includes('echo') || code.includes('print');
-      const hasVar = code.includes('$');
-      passed = hasTag && (hasEcho || hasVar || code.includes('function'));
-      actual = passed ? (testCase.expectedOutput || 'Output PHP generato correttamente.') : 'Errore PHP: manca il tag di apertura <?php o un costrutto di stampa/variabile ($).';
-     } else if (lang === 'c') {
-      const hasInclude = code.includes('#include');
-      const hasMain = code.includes('main') || code.includes('printf') || code.includes('void');
-      passed = hasInclude && hasMain;
-      actual = passed ? (testCase.expectedOutput || 'Esecuzione codice C completata con codice 0.') : 'Errore C: manca la direttiva #include o la dichiarazione della funzione principale.';
-     } else if (lang === 'csharp') {
-      const hasUsing = code.includes('using ') || code.includes('class') || code.includes('Console.');
-      passed = hasUsing && (code.includes('Write') || code.includes('static') || code.includes('{'));
-      actual = passed ? (testCase.expectedOutput || 'Output C# compilato ed eseguito con successo.') : 'Errore C#: Assicurati di dichiarare le classi e di usare Console.WriteLine per stampare.';
-     } else if (lang === 'perl') {
-      passed = code.includes('print') || code.includes('my $') || code.includes('sub ');
-      actual = passed ? (testCase.expectedOutput || 'Script Perl interpretato ed eseguito con successo.') : 'Errore Perl: sintassi non riconosciuta o manca il comando di stampa.';
-     } else if (lang === 'ruby') {
-      passed = code.includes('def ') || code.includes('puts ') || code.includes('class ') || code.includes('end');
-      actual = passed ? (testCase.expectedOutput || 'Output Ruby valutato correttamente.') : 'Errore Ruby: manca la definizione di funzione/classe (def/class ... end) o il comando puts.';
-     } else if (lang === 'lua') {
-      passed = code.includes('local ') || code.includes('function ') || code.includes('print(') || code.includes('end');
-      actual = passed ? (testCase.expectedOutput || 'Script Lua completato con successo.') : 'Errore Lua: manca la dichiarazione locale delle variabili (local) o un blocco function/end.';
-     } else if (lang === 'nextjs') {
-      const hasImport = code.includes('import') || code.includes('export');
-      const hasReact = code.includes('use client') || code.includes('React') || code.includes('useState') || code.includes('getServerSideProps') || code.includes('export default');
-      passed = hasImport || hasReact;
-      actual = passed ? 'Next.js AppRouter/Pages: rendering completato. Componente idratato.' : 'Errore Next.js: Manca l\'esportazione del componente React o l\'import dei moduli Next.';
-     } else if (lang === 'angular') {
-      const hasDecorator = code.includes('@Component') || code.includes('Component') || code.includes('class ') || code.includes('selector:');
-      passed = hasDecorator;
-      actual = passed ? 'Angular: Componente compilato ed associato al modulo DOM.' : 'Errore Angular: Assicurati di usare il decoratore @Component e definire la classe.';
-     } else if (lang === 'vue') {
-      const hasTemplate = code.includes('<template>') || code.includes('ref(') || code.includes('defineProps') || code.includes('<script>');
-      passed = hasTemplate;
-      actual = passed ? 'Vue.js: SFC virtual-DOM compilato con successo. Direttive idratate.' : 'Errore Vue.js: Struttura del Single File Component SFC (template/script) non corretta.';
-     } else if (lang === 'svelte') {
-      const hasScript = code.includes('<script>') || code.includes('export let') || code.includes('$:') || code.includes('{');
-      passed = hasScript;
-      actual = passed ? 'Svelte: Componente compilato in codice JS nativo efficiente.' : 'Errore Svelte: Struttura del componente Svelte non valida.';
-     } else if (lang === 'astro') {
-      const hasFrontmatter = code.startsWith('---') || code.includes('---');
-      passed = hasFrontmatter;
-      actual = passed ? 'Astro: Static-Site Generation (SSG) completato con successo.' : 'Errore Astro: Manca il blocco di frontmatter tra i delimitatori ---.';
-     } else if (lang === 'html') {
-      const trimmedUser = code.replace(/\s+/g, ' ').trim().toLowerCase();
-      const trimmedExpected = testCase.expectedOutput.replace(/\s+/g, ' ').trim().toLowerCase();
-      passed = trimmedUser.includes(trimmedExpected);
-      actual = code.trim();
-     } else if (lang === 'css') {
-      const cleanedUser = code.replace(/\s+/g, '').toLowerCase();
-      const cleanedExpected = testCase.expectedOutput.replace(/\s+/g, '').toLowerCase();
-      passed = cleanedUser.includes(cleanedExpected);
-      actual = code.trim();
-     } else if (lang === 'java') {
-      const hasClass = code.includes('class Persona');
-      const hasField = code.includes('private String nome');
-      const hasConstructor = code.includes('Persona') && code.includes('String') && code.includes('this.nome');
-      const hasGetter = code.includes('getNome()') && code.includes('return');
-      passed = hasClass && hasField && hasConstructor && hasGetter;
-      actual = passed ? testCase.expectedOutput : 'Errore sintattico: Assicurati di dichiarare correttamente la classe, l\'attributo privato, il costruttore ed il getter.';
-     } else if (lang === 'cpp') {
-      const hasFunc = code.includes('moltiplicaPerDue');
-      const hasPointer = code.includes('int*') || code.includes('int *');
-      const hasNullCheck = code.includes('nullptr') || code.includes('NULL') || code.includes('0');
-      const hasDereference = code.includes('*ptr');
-      passed = hasFunc && hasPointer && hasNullCheck && hasDereference;
-      actual = passed ? testCase.expectedOutput : 'Errore: Assicurati di controllare se il puntatore è nullo e di dereferenziare correttamente usando *ptr.';
-     }
-    } catch (err) {
+     } catch (err) {
      passed = false;
      actual = 'Errore di esecuzione: ' + (err as Error).message;
     }

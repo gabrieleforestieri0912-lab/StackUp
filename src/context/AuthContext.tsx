@@ -52,6 +52,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
  const [user, setUser] = useState<User | null>(null);
  const [loading, setLoading] = useState(true);
 
+ const fetchUser = async (token: string) => {
+  try {
+   const res = await fetch('/api/auth/me', {
+    headers: { Authorization: `Bearer ${token}` },
+   });
+   const data = await res.json();
+   if (res.ok && data.user) {
+    setUser(data.user);
+   }
+  } catch {
+   console.error('Failed to fetch user');
+  }
+ };
+
  useEffect(() => {
   const init = async () => {
    const { data: { session } } = await supabase.auth.getSession();
@@ -59,7 +73,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     persistToken(session.access_token);
     await fetchUser(session.access_token);
    } else {
-    // Nessuna sessione Supabase: pulisce eventuali token orfani
     persistToken();
    }
    setLoading(false);
@@ -78,22 +91,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   init();
   return () => subscription.unsubscribe();
  }, []);
-
- const fetchUser = async (token: string) => {
-  try {
-   const res = await fetch('/api/auth/me', {
-    headers: { Authorization: `Bearer ${token}` },
-   });
-   const data = await res.json();
-   if (res.ok && data.user) {
-    setUser(data.user);
-   }
-  } catch {
-   console.error('Failed to fetch user');
-  }
- };
-
- /** Stabilisce la sessione Supabase nel browser e persiste il token. */
+  /** Stabilisce la sessione Supabase nel browser e persiste il token. */
  const establishSession = useCallback(async (accessToken: string, refreshToken?: string) => {
   persistToken(accessToken);
   if (refreshToken) {

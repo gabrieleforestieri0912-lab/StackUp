@@ -156,7 +156,6 @@ NEXT_PUBLIC_GA_ID                     # Google Analytics (opzionale)
 | GET | `/api/certificates` | Bearer | Certificati utente |
 | POST | `/api/certificates` | Bearer | Genera certificato (verifica enrollment, idempotente) |
 | POST | `/api/contact` | No | Form contatti → Resend + tabella messages |
-| GET | `/api/esercizi` | No | Esercizi liberi (tabella free_exercises) |
 | GET | `/api/orders` | Bearer | Ordini utente |
 | POST | `/api/progress/exercises` | Bearer | Salva esercizio completato (XP + streak, una sola volta; segnala checkpoint superato) |
 | POST | `/api/payments/create-checkout` | Bearer | Sessione Stripe Checkout |
@@ -260,7 +259,7 @@ La pagina corso mostra i campi blueprint: `subtitle` (promessa), `outcome` ("Cos
 - **Certificato automatico attivo**: il certificato viene rilasciato automaticamente al 100% degli esercizi del corso (verificato server-side in `/api/progress/exercises`).
 - **Blueprint corsi implementato**: Identity Card, moduli con checkpoint, gating progressivo, formato lezione a 5 punti, materiali per modulo (repo/cheat sheet/docs/troubleshooting) — vedi §8.
 - **Nota**: le route auth espongono solo `POST` (nessun `PUT`); le pagine che le chiamano usano `POST`.
-- **File non utilizzati**: `components/ui/TopBar.tsx`, `components/ui/SEO.tsx` (solo legacy), `data/coursesPreviewData.ts` (usato solo dalla homepage preview).
+- **File non utilizzati**: `components/ui/SEO.tsx` (solo legacy), `data/coursesPreviewData.ts` (usato solo dalla homepage preview).
 - **Dipendenze installate ma inutilizzate**: `aos`, `micro`, `nodemailer`, `nextjs-cors`, `@fontsource/jetbrains-mono`, `babel-plugin-react-compiler`, `react-helmet-async`.
 - **Vitest rimosso** (luglio 2026): non ci sono più test né script `test`.
 - **Turbopack dev cache riabilitata** (agosto 2026): rimosso `experimental.turbopackFileSystemCacheForDev: false`; se il loop di persistenza della cache (RAM/disco) dovesse ripresentarsi su Next 16.2.x, riapplicare il flag.
