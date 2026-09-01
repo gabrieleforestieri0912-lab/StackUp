@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -216,11 +215,13 @@ const CourseCard: React.FC<CourseCardProps> = ({
       className="flex flex-col h-full group bg-black/60 border border-zinc-800 hover:border-orange-300/30 transition-all duration-500 overflow-hidden rounded-2xl no-underline"
     >
       <div className="relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-zinc-900 via-black to-zinc-950 flex items-center justify-center">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={getTechIconUrl(tech)}
           alt={title}
           width={96}
           height={96}
+          loading="lazy"
           className="w-20 h-20 sm:w-24 sm:h-24 object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-500"
           crossOrigin="anonymous"
         />
