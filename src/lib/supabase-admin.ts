@@ -16,68 +16,6 @@ export async function getAuthUser(token: string) {
   return user;
 }
 
-async function mapProfile(row: Record<string, unknown>) {
-  if (!row) return null;
-  const { data: enrollments } = await supabaseAdmin
-    .from('enrollments')
-    .select('course_id')
-    .eq('user_id', row.id);
-  const { data: certs } = await supabaseAdmin
-    .from('certificates')
-    .select('course_id, certificate_id, completed_at')
-    .eq('user_id', row.id);
-  return {
-    _id: row.id,
-    id: row.id,
-    name: row.name,
-    email: row.email,
-    avatar: row.avatar || undefined,
-    authMethod: row.auth_method,
-    enrolledCourses: (enrollments || []).map((e: { course_id: string }) => e.course_id),
-    certificates: (certs || []).map((c: { course_id: string; certificate_id: string; completed_at: string }) => ({
-      courseId: c.course_id,
-      certificateId: c.certificate_id,
-      completedAt: c.completed_at,
-    })),
-    studyStreak: row.study_streak || 0,
-    studyHours: row.study_hours || 0,
-    exp: row.exp || 0,
-    createdAt: row.created_at,
-  };
-}
-
-export async function getProfileById(userId: string) {
-  const { data, error } = await supabaseAdmin
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single();
-  if (error || !data) return null;
-  return mapProfile(data);
-}
-
-export async function createProfile(
-  userId: string,
-  email: string,
-  name: string,
-  avatar?: string,
-  authMethod: string = 'local'
-) {
-  const { data, error } = await supabaseAdmin
-    .from('profiles')
-    .insert({
-      id: userId,
-      email,
-      name,
-      avatar: avatar || null,
-      auth_method: authMethod,
-    })
-    .select()
-    .single();
-  if (error) throw error;
-  return mapProfile(data);
-}
-
 export async function updateStreak(userId: string) {
   const { data: profile, error: fetchError } = await supabaseAdmin
     .from('profiles')

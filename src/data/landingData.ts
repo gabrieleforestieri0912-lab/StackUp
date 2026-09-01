@@ -1,4 +1,4 @@
-import { Code2, Terminal, Globe, Smartphone, GraduationCap, Target, Rocket, BookOpen, Monitor, Database, Layers, Award, Cog, Layout, Server, Palette, Gamepad2, Laptop, Blocks, Brain, Trash2, Bot, Search, Clock, Users, TrendingUp, Sparkles, CheckCircle, Star, Zap, Map, ArrowRight, Calendar, Lightbulb, Megaphone, Wrench, DollarSign } from 'lucide-react'
+import { Code2, Globe, Target, Rocket, Database, Layout, Palette, Brain, TrendingUp, Zap, Map, Calendar, Lightbulb, Megaphone, Wrench, DollarSign } from 'lucide-react'
 
 export interface CourseItem {
   id: string
@@ -13,48 +13,6 @@ export interface CourseItem {
   description?: string
   skills?: string[]
 }
-
-export interface ProgramItem {
-  id: string
-  title: string
-  tag: string
-  duration: string
-  courses: number
-  price: string
-  description: string
-  color: string
-  highlights: string[]
-}
-
-export const ROADMAP_STEPS = [
-  {
-    step: 1,
-    title: "kill the noise.",
-    subtitle: "Taglia le distrazioni.",
-    description: "Smettila di saltabeccare fra 400 corsi e 500 tutorial. Non hai bisogno di sapere tutto, hai bisogno del percorso giusto.",
-    icon: Trash2,
-    badge: "Deep Audit",
-    gradient: "from-red-500/20 to-red-600/10"
-  },
-  {
-    step: 2,
-    title: "get to code.",
-    subtitle: "scrivilo, e subito.",
-    description: "Sei qui per programmare. Non per guardare video motivazionali. Sessione dopo sessione, progetto dopo progetto.",
-    icon: Terminal,
-    badge: "Hard Coding",
-    gradient: "from-orange-500/20 to-orange-600/10"
-  },
-  {
-    step: 3,
-    title: "get physical.",
-    subtitle: "diffondi il tuo nome.",
-    description: "Non sei uno studente. Sei un professionista, comportati da tale. Curriculum, LinkedIn, networking, soft skills, tanto che lamento.",
-    icon: Rocket,
-    badge: "Market Launch",
-    gradient: "from-emerald-500/20 to-teal-600/10"
-  }
-]
 
 export interface PathItem {
   id: string;
@@ -199,67 +157,6 @@ export const COURSES_DATA: CourseItem[] = [
 ]
 
 export const COURSES_PREVIEW = COURSES_DATA.slice(0, 6)
-
-export const FOR_WHOM = [
-  {
-    who: "studenti e neo-diplomati",
-    desc: "Hai finito la scuola, ma non sai da che parte iniziare. Ti servono competenze reali, non teoria astratta.",
-    in: "Inizi a programmare da subito. Fin dalla prima sessione costruirai qualcosa di vero."
-  },
-  {
-    who: "cambiavia, in anno sabatico",
-    desc: "Lavori in un settore che non ti dà piú niente. vuoi svoltare, ma non sai se farai in tempo.",
-    in: "Sei determinato, hai voglia di studiare e abbiamo giá aiutato centinaia come te."
-  },
-  {
-    who: "student-ultra frustrati",
-    desc: "Frequenti da 2+ anni l'università, senti che stai sprecando i tuoi 20 anni. Cerchi del mentoring, qualcuno che ti dica la verità.",
-    in: "Non ti illudiamo: ti prepariamo per una carriera tecnica seria dove la competenza viene prima del pezzo di carta."
-  },
-  {
-    who: "under performer",
-    desc: "Conosci le basi della programmazione, hai sperimentato con diversi linguaggi. Sei consapevole che ti manca un metodo.",
-    in: "Ti portiamo da uno stato di familiarità con il codice alla capacità di scrivere codice per un team professionale."
-  },
-  {
-    who: "near-senior",
-    desc: "Lavori da 3+ anni come junior/intermedio, ma senti che la tua crescita é rallentata.",
-    in: "Ti daremo una spinta finale ad alto impatto. sblocca i nodi che ti tengono intrappolato."
-  },
-  {
-    who: "aspiring entrepreneur",
-    desc: "Hai l'idea per la tua startup, ma non hai le competenze tecniche per realizzarla da solo.",
-    in: "Ti insegniamo a costruire un MVP validato. diventa il CTO del tuo progetto."
-  },
-  {
-    who: "digital nomad hopeful",
-    desc: "Sogni di lavorare da dove vuoi, senza orario fisso. vuoi conquistare l'indipendenza finanziaria lavorando per aziende estere.",
-    in: "Le competenze tecniche non bastano. impari il mindset da professionista globale."
-  }
-]
-
-export const FEATURES_CARDS = [
-  {
-    icon: Users,
-    title: "Community esclusiva",
-    desc: "Sei in una lega che ha il tuo stesso obiettivo. gente che programma, sbaglia, impara, e cresce. supporto daily."
-  },
-  {
-    icon: Target,
-    title: "Mentoring", 
-    desc: "Istruttori senior che hanno anni di esperienza nelle migliori aziende, focalizzati sulla tua crescita."
-  },
-  {
-    icon: Code2,
-    title: "Progetti reali",
-    desc: "Niente tutorial sparsi. costruisci prodotti che vanno in produzione e possono stare nel tuo portfolio."
-  },
-  {
-    icon: Rocket,
-    title: "Employability",
-    desc: "ti aiutiamo a creare un curriculum vincente. la tua carriera inizia nel momento in cui completi il percorso."
-  }
-]
 
 export const FAQ = [
   {
