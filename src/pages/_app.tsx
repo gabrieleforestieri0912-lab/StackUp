@@ -13,7 +13,7 @@ import { Toaster } from "react-hot-toast";
 const jetbrainsMono = JetBrains_Mono({
  variable: "--font-mono",
  subsets: ["latin"],
- weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 import { useRouter } from "next/router";

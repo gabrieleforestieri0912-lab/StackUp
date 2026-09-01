@@ -87,9 +87,10 @@ const ForgotPassword: React.FC = () => {
  required
  className="w-full pl-11 pr-4 py-3.5 bg-black border border-zinc-800 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 outline-none transition-all font-medium text-zinc-100 text-sm rounded-xl"
  placeholder="nome@esempio.it"
- value={email}
- onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
- />
+  value={email}
+  disabled={loading}
+  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+  />
  </div>
  </div>
 
@@ -103,9 +104,16 @@ const ForgotPassword: React.FC = () => {
  <button
  type="submit"
  disabled={loading}
- className="w-full py-3.5 bg-black text-white font-bold hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/10 disabled:opacity-50 rounded-xl"
+ className="w-full py-3.5 bg-black text-white font-bold hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/10 disabled:opacity-60 disabled:cursor-not-allowed rounded-xl flex items-center justify-center gap-2"
  >
- {loading ?'Invio in corso...' :'Invia link di recupero'}
+ {loading ? (
+  <>
+  <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M21 12a9 9 0 1 1-6.219-8.56" strokeLinecap="round" />
+  </svg>
+  Invio in corso...
+  </>
+ ) :'Invia link di recupero'}
  </button>
  </form>
 

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import SEO from '../components/ui/SEO';
 import { getAccessToken } from '../lib/auth-token';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   BookOpen,
@@ -494,7 +495,7 @@ const Dashboard: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
-                        <div className={`flex flex-col h-full group transition-all duration-500 overflow-hidden bg-zinc-900/30 border rounded-2xl ${
+                        <div className={`relative flex flex-col h-full group transition-all duration-500 overflow-hidden bg-zinc-900/30 border rounded-2xl ${
                           isCompleted ? 'border-emerald-500/30 hover:border-emerald-400/50' : 'border-zinc-800/60 hover:border-orange-400/30'
                         } hover:shadow-[0_12px_40px_rgba(249,115,22,0.06)]`}>
                           {isCompleted && (
@@ -505,10 +506,11 @@ const Dashboard: React.FC = () => {
                             </div>
                           )}
                           <div className="relative aspect-video w-full overflow-hidden">
-                            <img
+                            <Image
                               src={course.imageUrl || '/course-placeholder.jpg'}
                               alt={course.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                             <div className="absolute bottom-4 left-4 right-4">

@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-zinc-800/60 bg-black">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-12">
+          <nav aria-label="Link del footer" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="inline-block mb-4">
               <span className="text-xl font-black text-white tracking-tight">
@@ -84,7 +84,7 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-        </div>
+          </nav>
 
         <div className="mt-12 pt-8 pb-8 border-t border-zinc-800/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-zinc-600 text-xs font-medium">

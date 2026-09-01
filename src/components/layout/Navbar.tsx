@@ -49,14 +49,26 @@ const Navbar = () => {
    return () => window.removeEventListener('click', handleClick);
   }, [isProfileOpen]);
 
-  useEffect(() => {
-   if (isOpen) {
-    document.body.style.overflow = 'hidden';
-   } else {
-    document.body.style.overflow = '';
-   }
-   return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
+   useEffect(() => {
+    if (isOpen) {
+     document.body.style.overflow = 'hidden';
+    } else {
+     document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+   }, [isOpen]);
+
+   useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+     if (e.key === 'Escape') {
+      setIsOpen(false);
+      setIsProfileOpen(false);
+     }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+   }, [isOpen]);
 
    const links: NavLink[] = [
     { name: 'Corsi', path: '/courses' },
@@ -146,6 +158,9 @@ const Navbar = () => {
             e.stopPropagation();
             setIsProfileOpen(!isProfileOpen);
            }}
+           aria-label="Menu profilo"
+           aria-haspopup="menu"
+           aria-expanded={isProfileOpen}
            className="flex items-center gap-1.5 pl-2 pr-1.5 py-1 rounded-lg bg-zinc-900/80 border border-zinc-800 hover:border-orange-400/40 transition-all group"
         >
          {user.avatar && !desktopAvatarError ? (
@@ -171,6 +186,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
               className="absolute right-0 mt-2 w-52 bg-zinc-900/95 backdrop-blur-xl border border-zinc-800 shadow-2xl rounded-xl z-[2100] overflow-hidden"
+              role="menu"
            >
             <div className="px-3.5 py-2.5 border-b border-zinc-800">
              <p className="text-[12px] font-bold text-white">{user.name}</p>
@@ -178,11 +194,11 @@ const Navbar = () => {
             </div>
 
             <div className="p-1">
-             <Link href="/my-courses" className="flex items-center gap-2.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-lg">
+             <Link href="/my-courses" role="menuitem" className="flex items-center gap-2.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-lg">
              <UserIcon size={14} className="text-zinc-500" />
              I miei corsi
             </Link>
-             <Link href="/dashboard" className="flex items-center gap-2.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-lg">
+             <Link href="/dashboard" role="menuitem" className="flex items-center gap-2.5 px-3 py-1.5 text-[12px] font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all rounded-lg">
             <BookOpen size={14} className="text-zinc-500" />
             Dashboard
            </Link>
@@ -191,6 +207,7 @@ const Navbar = () => {
            <div className="border-t border-zinc-800 p-1">
            <button
              onClick={logout}
+             role="menuitem"
              className="w-full flex items-center gap-2.5 px-3 py-1.5 text-[12px] font-semibold text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-all rounded-lg"
            >
             <LogOut size={14} />

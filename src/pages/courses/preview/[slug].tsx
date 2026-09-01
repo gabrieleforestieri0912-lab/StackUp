@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import SEO from '../../../components/ui/SEO';
 import { motion } from 'framer-motion';
 import {
@@ -146,11 +146,12 @@ const CoursePreview = () => {
  className="relative"
  >
  <div   className="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl group cursor-pointer relative">
- <img
- src={course.imageUrl}
- alt={course.title}
- className="w-full h-full object-cover group-transition-transform duration-700"
- />
+  <Image
+  src={course.imageUrl}
+  alt={course.title}
+  fill
+  className="object-cover group-transition-transform duration-700"
+  />
  <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/20 transition-colors">
   <div className="w-20 h-20 bg-black/20 backdrop-blur-md rounded-2xl flex items-center justify-center group-hover:bg-orange-600 transition-all duration-500 shadow-2xl">
  <Play size={36} className="text-white ml-1" />

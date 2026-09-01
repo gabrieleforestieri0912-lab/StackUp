@@ -1,9 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
- 
 "use client";
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Lock, ArrowRight, Clock, BookOpen, Star, Code, Terminal, Database, Smartphone, Cloud, Brain, BarChart, Shield, CheckCircle, Users, TrendingUp } from "lucide-react";
 import Badge from "@/components/ui/Badge";
@@ -97,9 +96,11 @@ const PathsPage = () => {
                   >
                     {/* Tech image header */}
                     <div className={`relative h-20 ${c.subtle} flex items-center justify-center overflow-hidden`}>
-                      <img
+                      <Image
                         src={`https://cdn.simpleicons.org/${meta.tech}`}
                         alt={path.title}
+                        width={40}
+                        height={40}
                         className="h-10 w-10 object-contain opacity-30 group-hover:opacity-50 transition-opacity duration-500"
                         crossOrigin="anonymous"
                       />

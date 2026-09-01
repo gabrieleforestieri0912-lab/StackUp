@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import SEO from '../components/ui/SEO';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
  BookOpen,
@@ -221,11 +221,12 @@ const MyCourses: React.FC = () => {
  className="flex flex-col h-full group bg-[#111] border border-zinc-800 rounded-2xl hover:border-orange-400/30 transition-all duration-500 overflow-hidden no-underline"
  >
  <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
- <img
- src={course.imageUrl || '/course-placeholder.jpg'}
- alt={course.title}
- className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
- />
+  <Image
+  src={course.imageUrl || '/course-placeholder.jpg'}
+  alt={course.title}
+  fill
+  className="object-cover group-hover:scale-105 transition-transform duration-700"
+  />
  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
  <div className="absolute bottom-3 left-3 right-3">
  <div className="flex items-center justify-between text-white mb-1.5">
