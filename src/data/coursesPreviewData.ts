@@ -43,7 +43,7 @@ const COURSES_DATA: Record<string, CoursePreview> = {
     imageUrl: '/corsi/python.png',
     instructor: { name: 'Alice Moretti', role: 'Backend Developer Senior', avatar: '' },
     shortDesc: 'Impara Python per il web: API, database, Django e deployment.',
-    longDescription: `Python è oggi il linguaggio più versatile e richiesto per lo sviluppo web. Dai backend di startup innovative alle architetture enterprise, Python alimenta alcune delle piattaforme più grandi del mondo. Questo corso parte dalle basi e ti porta fino a costruire applicazioni web complete e deployate in produzione.
+    longDescription: `Python è uno dei linguaggi più versatili per lo sviluppo web. Dalle API leggere alle applicazioni strutturate, Python è usato in molti contesti produttivi. Questo corso parte dalle basi e ti guida nella costruzione di applicazioni web complete, con attenzione a buone pratiche e deploy.
 
 Inizieremo con i fondamenti del linguaggio: sintassi, strutture dati, OOP e best practice. Subito dopo entreremo nel vivo dello sviluppo web: HTTP, API REST, database e autenticazione.
 
@@ -95,12 +95,12 @@ Nella seconda parte del corso esploreremo i framework più utilizzati: Flask per
       'Connessione internet stabile'
     ],
     includes: [
-      '40 ore di video lezioni in 4K',
+      '40 ore di video lezioni',
       '60+ esercizi pratici con correzione automatica',
       '5 progetti web guidati completi',
-      'Accesso a vita e aggiornamenti futuri',
+      'Accesso ai contenuti acquistati e aggiornamenti futuri',
       'Certificato di completamento',
-      'Supporto 1:1 via chat con il mentor',
+      'Supporto didattico e community',
       'Community privata studenti',
       'Codice sorgente di tutti i progetti'
     ],
@@ -169,12 +169,12 @@ Il corso copre anche argomenti avanzati come upload di file, rate limiting, cach
       'Node.js installato',
     ],
     includes: [
-      '35 ore di video lezioni in 4K',
+      '35 ore di video lezioni',
       '50+ esercizi pratici con soluzioni',
       '4 progetti backend completi',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat con il mentor',
+      'Supporto didattico e community',
       'Template Express + Prisma',
       'Codice sorgente su GitHub',
     ],
@@ -192,7 +192,7 @@ Il corso copre anche argomenti avanzati come upload di file, rate limiting, cach
     imageUrl: '/corsi/java.png',
     instructor: { name: 'Luca Ferrari', role: 'Enterprise Architect', avatar: '' },
     shortDesc: 'Programmazione Object-Oriented solida e architetture enterprise moderne.',
-    longDescription: `Java rimane il pilastro dello sviluppo enterprise globale. Questo corso è progettato per trasformarti da sviluppatore con basi di OOP in un professionista pronto ad affrontare architetture complesse e sistemi ad alto carico.
+    longDescription: `Java è ampiamente usato in contesti enterprise per applicazioni robuste e manutenibili. Questo corso consolida le basi OOP e introduce architetture usate in sistemi strutturati, con esempi progressivi e progetti pratici.
 
 Partiremo dal consolidamento dei fondamenti OOP e delle best practice di progettazione, per poi immergerci nel mondo delle applicazioni enterprise con Spring Boot. Imparerai a costruire API REST robuste, gestire la persistenza con JPA/Hibernate e implementare pattern architetturali come MVC, Dependency Injection e Service Layer.
 
@@ -244,12 +244,12 @@ La parte avanzata del corso copre microservizi, containerizzazione con Docker, m
       'JDK 17+ installato'
     ],
     includes: [
-      '60 ore di video lezioni in 4K',
+      '60 ore di video lezioni',
       '80+ esercizi e sfide di codice',
       '5 moduli di progetto completi',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Codice sorgente enterprise-grade',
       'Template di architettura pronti'
     ],
@@ -319,12 +319,12 @@ Ogni argomento è accompagnato da esercizi pratici e sfide di codice. Lavorerai 
       'Editor di codice (VS Code consigliato)'
     ],
     includes: [
-      '45 ore di video lezioni in 4K',
+      '45 ore di video lezioni',
       '70+ esercizi interattivi',
       '5 progetti reali da portfolio',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Slides e cheat sheet scaricabili',
       'Community Discord privata'
     ],
@@ -393,10 +393,10 @@ Il corso copre anche le tecnologie colpite: SVG per la grafica vettoriale nel we
       'Voglia di imparare le basi del web'
     ],
     includes: [
-      '15 ore di video lezioni in 4K',
+      '15 ore di video lezioni',
       '30+ esercizi pratici',
       '2 progetti completi',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
       'Assistenza via chat',
       'Materiale didattico PDF',
@@ -467,12 +467,12 @@ La parte finale del corso è dedicata ai progetti reali: ricreeremo interfacce m
       'Editor di codice (VS Code)'
     ],
     includes: [
-      '25 ore di video lezioni in 4K',
+      '25 ore di video lezioni',
       '50+ esercizi di layout',
       '4 progetti di interfacce reali',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Figma design files inclusi',
       'Design system starter kit'
     ],
@@ -541,12 +541,12 @@ Il corso include esercizi progressivi, refactoring di codice JavaScript reale in
       'Node.js 18+ installato'
     ],
     includes: [
-      '35 ore di video lezioni in 4K',
+      '35 ore di video lezioni',
       '50+ esercizi di tipizzazione',
       '3 progetti completi',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Configurazioni tsconfig pronte',
       'ESLint e Prettier config inclusi'
     ],
@@ -616,12 +616,12 @@ Il corso dedica ampio spazio ai progetti pratici: costruiremo un dashboard compl
       'Familiarità con terminale e Git'
     ],
     includes: [
-      '40 ore di video lezioni in 4K',
+      '40 ore di video lezioni',
       '60+ esercizi e component challenge',
       '4 progetti reali completi',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Figma design system incluso',
       'Template Next.js pronto'
     ],
@@ -693,10 +693,10 @@ La seconda parte è dedicata alla produzione: ottimizzazione delle performance, 
       'Familiarità con Git e terminale'
     ],
     includes: [
-      '30 ore di video lezioni in 4K',
+      '30 ore di video lezioni',
       '40+ esercizi pratici',
       'Progetto SaaS completo',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
       'Supporto tecnico 1:1',
       'Template Next.js pronto',
@@ -768,10 +768,10 @@ La parte avanzata copre RxJS e programmazione reattiva, NgRx per la gestione del
       'Familiarità con terminale'
     ],
     includes: [
-      '35 ore di video lezioni in 4K',
+      '35 ore di video lezioni',
       '50+ esercizi e challenge',
       'Progetto gestionale completo',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
       'Supporto tecnico 1:1',
       'Angular Material incluso',
@@ -846,12 +846,12 @@ La parte avanzata copre componenti custom, plugin, animazioni, integrazione con 
       'Browser moderno'
     ],
     includes: [
-      '15 ore di video lezioni in 4K',
+      '15 ore di video lezioni',
       '30+ esercizi di styling',
       'Dashboard admin completo',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Configurazioni pronte',
       'Design system starter'
     ],
@@ -921,12 +921,12 @@ Passeremo poi alle API più utilizzate: storage, tabs, notifications, bookmarks,
       'Editor di codice'
     ],
     includes: [
-      '15 ore di video lezioni in 4K',
+      '15 ore di video lezioni',
       '25+ esercizi pratici',
       'Estensione productivity completa',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat',
+      'Supporto didattico e community',
       'Template WXT + React',
       'Guida alla pubblicazione su Store'
     ],
@@ -995,13 +995,13 @@ Nella parte avanzata vedrai strategie di conversione: call-to-action efficaci, s
       'Nessuna esperienza di design richiesta'
     ],
     includes: [
-      '20 ore di video lezioni in 4K',
+      '20 ore di video lezioni',
       '20+ esercizi pratici',
       'Template landing page completo',
       'Figma kit con componenti',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['Design', 'Next.js', 'Tailwind', 'Figma', 'Conversion', 'Framer Motion', 'SEO']
   },
@@ -1068,14 +1068,14 @@ La parte avanzata copre feature essenziali per una SaaS: dashboard utente, gesti
       'Familiarità con Terminal e Git'
     ],
     includes: [
-      '25 ore di video lezioni in 4K',
+      '25 ore di video lezioni',
       '30+ esercizi pratici',
       'Template SaaS completo',
       'Componenti Stripe già integrati',
       'Schema Prisma completo',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['Next.js', 'Stripe', 'SaaS', 'PostgreSQL', 'Prisma', 'NextAuth', 'TypeScript']
   },
@@ -1142,14 +1142,14 @@ Costruirai API REST complete con routing, middleware, autenticazione e database 
       'Familiarità con API REST (concettuale)'
     ],
     includes: [
-      '30 ore di video lezioni in 4K',
+      '30 ore di video lezioni',
       '35+ esercizi pratici',
       'API completa con autenticazione',
       'Worker pool per job queue',
       'Dockerfile e Docker Compose pronti',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['Go', 'API REST', 'Concurrency', 'PostgreSQL', 'Redis', 'Docker', 'Microservizi']
   },
@@ -1216,15 +1216,15 @@ Nella parte avanzata esploreremo Kubernetes per orchestrazione, monitoring con P
       'Familiarità con Git e GitHub'
     ],
     includes: [
-      '20 ore di video lezioni in 4K',
+      '20 ore di video lezioni',
       '25+ esercizi pratici',
       'Dockerfile e Compose pronti',
       'Pipeline CI/CD template',
       'Config Kubernetes base',
       'Dashboard Grafana pre-configurata',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['Docker', 'CI/CD', 'Kubernetes', 'GitHub Actions', 'Prometheus', 'Grafana', 'DevOps']
   },
@@ -1291,14 +1291,14 @@ La parte pratica include ottimizzazione delle performance, progettazione di sche
       'Familiarità con linguaggi di programmazione'
     ],
     includes: [
-      '25 ore di video lezioni in 4K',
+      '25 ore di video lezioni',
       '30+ esercizi pratici con dataset reali',
       'Schema completo e-commerce',
       'Script di migrazione pronti',
       'PostgreSQL playground setup',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['SQL', 'PostgreSQL', 'Database Design', 'Query Optimization', 'Data Modeling', 'Indici', 'Migrazioni']
   },
@@ -1365,14 +1365,14 @@ La parte pratica include pull request, code review, GitHub Actions per CI/CD, Gi
       'Editor di codice e terminale'
     ],
     includes: [
-      '10 ore di video lezioni in 4K',
+      '10 ore di video lezioni',
       '15+ esercizi pratici',
       'Cheat sheet Git stampabile',
       'Template pull request',
       'Workflow GitHub Actions pronto',
-      'Accesso a vita e aggiornamenti',
+      'Accesso ai contenuti acquistati e aggiornamenti',
       'Certificato di completamento',
-      'Supporto 1:1 via chat'
+      'Supporto didattico e community'
     ],
     skills: ['Git', 'GitHub', 'Version Control', 'CI/CD', 'GitHub Actions', 'Open Source', 'Collaboration']
   }

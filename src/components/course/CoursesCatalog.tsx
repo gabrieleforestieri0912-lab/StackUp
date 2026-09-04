@@ -351,12 +351,12 @@ const CoursesCatalog: React.FC = () => {
   }, [searchParams, refreshUser]);
 
   const features: string[] = [
-    "Video Lezioni in 4K",
-    "Esercitazioni Pratiche",
-    "Supporto 1:1 via Chat",
-    "Certificato Finale",
-    "Accesso a Vita",
-    "Progetti Real-World",
+    "Video lezioni on-demand",
+    "Esercitazioni pratiche",
+    "Supporto didattico e community",
+    "Certificato di completamento",
+    "Accesso ai contenuti acquistati",
+    "Progetti reali",
   ];
 
   const getIcon = (iconName: string): React.ComponentType<{ size?: number }> =>
@@ -418,8 +418,7 @@ const CoursesCatalog: React.FC = () => {
             <span className="text-orange-400">risultati reali.</span>
           </h2>
           <p className="text-lg text-zinc-400 font-medium leading-relaxed mb-8 max-w-xl">
-            Ogni corso è costruito sulla mia esperienza sul campo. Niente
-            superfluo, solo ciò che serve per lavorare in aziende top tier.
+            Ogni corso è costruito con focus su pratica e progetti reali: solo ciò che serve per lavorare con metodo professionale.
           </p>
           <div className="grid grid-cols-2 gap-4">
             {features.map((feat, i) => (

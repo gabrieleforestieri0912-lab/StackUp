@@ -2,7 +2,7 @@ import { supabaseAdmin } from './supabase-admin';
 
 export const SITE_NAME = 'StackUp Room';
 export const SITE_TAGLINE =
-  'La community dove imparare a programmare sul serio: corsi pratici di React, Next.js, Node.js, Python, TypeScript con mentoring 1:1 e progetti reali.';
+  'La community per imparare a programmare con metodo pratico: corsi su React, Next.js, Node.js, Python e TypeScript con mentoring 1:1 e progetti reali.';
 
 export function siteUrl(): string {
   return (process.env.NEXT_PUBLIC_APP_URL || 'https://stackup.academy').replace(/\/$/, '');
@@ -87,7 +87,7 @@ export function organizationJsonLd() {
     url: siteUrl(),
     logo: absUrl('/stackup-og.svg'),
     description: SITE_TAGLINE,
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@stackup.academy',
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@stackup.it',
     sameAs: [],
     founder: {
       '@type': 'Person',

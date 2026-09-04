@@ -160,28 +160,28 @@ export const COURSES_PREVIEW = COURSES_DATA.slice(0, 6)
 
 export const FAQ = [
   {
-    q: "Quali corsi offre stackUp?",
-    a: "offro corsi di programmazione web professionale: Python, Java, JavaScript, TypeScript, HTML, CSS, React, Next.js, Angular, Tailwind CSS, Chrome Extensions, Landing Page Design, Go, Docker e Git. Ogni corso è progettato per portarti dal livello intermedio a senior engineer."
+    q: "Quali corsi offre StackUp?",
+    a: "Offriamo 18 corsi pratici tra frontend, backend e tooling: da HTML, CSS e JavaScript a React, Next.js, Angular, TypeScript, Python, Java, Go, Node.js, SQL, Docker, Tailwind CSS, Git e altro. Ogni corso combina teoria essenziale, esercizi interattivi e progetti reali."
   },
   {
-    q: "i corsi sono adatti a principianti?",
-    a: "I miei corsi sono pensati per sviluppatori con almeno 6-12 mesi di esperienza. se sei alle prime armi, ti consiglio di iniziare con le basi della programmazione prima di affrontare il mio percorso."
+    q: "I corsi sono adatti a principianti?",
+    a: "Sì. I corsi indicati come Beginner partono dalle basi e non richiedono esperienza pregressa. I corsi Intermedio richiedono invece familiarità con i fondamenti di programmazione: ogni scheda corso elenca i prerequisiti consigliati."
   },
   {
-    q: "come funziona il mentoring 1:1?",
-    a: "Il percorso Elite mentoring prevede sessioni individuali con me, un piano di studi personalizzato, code review approfonditi e supporto continuo."
+    q: "Come funziona il mentoring 1:1?",
+    a: "Con l'abbonamento a StackUp Room hai accesso a sessioni di mentoring 1:1, code review e un piano di studio personalizzato in base ai tuoi obiettivi. La frequenza dipende dal piano scelto."
   },
   {
-    q: "ricevo una certificazione?",
-    a: "Sì, ogni corso completato ti rilascia un certificato di competenza riconosciuto dal settore, che potrai aggiungere a LinkedIn e curriculum."
+    q: "Ricevo una certificazione?",
+    a: "Sì. Al completamento di tutti gli esercizi di un corso ottieni un certificato di completamento StackUp, scaricabile e condivisibile su LinkedIn e sul tuo curriculum."
   },
   {
-    q: "posso accedere ai corsi da mobile?",
-    a: "Assolutamente sì. la nostra piattaforma è completamente responsive e ottimizzata per tutti i dispositivi, così puoi studiare quando e dove vuoi."
+    q: "Posso accedere ai corsi da mobile?",
+    a: "Sì, la piattaforma è responsive e ottimizzata per desktop, tablet e smartphone, così puoi studiare dove e quando preferisci."
   },
   {
-    q: "qual è il tasso di placement?",
-    a: "Il mio tasso di placement è superiore al 95%. i miei ex studenti lavorano oggi in Google, Meta, Amazon e startup in tutta Europa."
+    q: "Che supporto ho dopo l'iscrizione?",
+    a: "Hai accesso alla community privata, ai progetti guidati e al supporto del team. Pubblichiamo aggiornamenti regolari sui contenuti e sulle opportunità di confronto con altri studenti."
   }
 ]
 

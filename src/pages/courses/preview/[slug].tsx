@@ -292,7 +292,7 @@ const CoursePreview = () => {
 
   <div className="bg-black p-8 rounded-2xl shadow-xl text-center">
   <p className="text-4xl font-black text-white mb-1">&euro;{course.price}</p>
-  <p className="text-sm text-zinc-400 font-medium mb-5">Accesso a vita &middot; Aggiornamenti inclusi</p>
+   <p className="text-sm text-zinc-400 font-medium mb-5">Accesso continuativo &middot; Aggiornamenti inclusi</p>
   <Link
   href={`/courses/${slugStr}`}
   className="block w-full py-4 bg-orange-600 text-white font-bold text-base hover:bg-orange-700 rounded-xl transition-all shadow-lg shadow-orange-600/20 mb-3"

@@ -33,7 +33,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-zinc-500 text-sm font-medium leading-relaxed">
-              Trasformiamo appassionati in developer. Percorsi intensivi, project-based learning e mentorship 1:1 per lanciare la tua carriera nella programmazione.
+              Percorsi pratici e project-based con mentorship 1:1 per aiutarti a crescere come developer e costruire progetti reali.
             </p>
           </div>
 

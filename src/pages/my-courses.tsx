@@ -178,8 +178,8 @@ const MyCourses: React.FC = () => {
  <BarChart3 size={20} />
  </div>
  <div>
- <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Accesso a vita</p>
- <p className="text-2xl font-black text-white">Sempre</p>
+  <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest">Accesso ai contenuti</p>
+  <p className="text-2xl font-black text-white">Continuativo</p>
  </div>
  </div>
  </div>

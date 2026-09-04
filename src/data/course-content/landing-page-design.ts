@@ -65,9 +65,9 @@ const content: SeedCourseContent = {
           points: 10,
           why: 'Le testimonianze sono il terzo pilastro della conversione dopo titolo e features.',
           how: 'Usa section con figure e figcaption per ogni testimonianza.',
-          instructions: 'Crea una `<section>` con `<h2>` "Cosa dicono i nostri studenti". Dentro due `<figure>`: prima con `<img>` (src "avatar1.jpg", alt "Maria R.") e `<figcaption>` "Il corso mi ha cambiato la vita! – Maria R.", seconda con `<img>` (src "avatar2.jpg", alt "Paolo B.") e `<figcaption>` "In 2 settimane ho creato il mio primo sito. – Paolo B.".',
-          starterCode: '<!-- Testimonial -->\n',
-          solution: '<section>\n  <h2>Cosa dicono i nostri studenti</h2>\n  <figure>\n    <img src="avatar1.jpg" alt="Maria R.">\n    <figcaption>Il corso mi ha cambiato la vita! – Maria R.</figcaption>\n  </figure>\n  <figure>\n    <img src="avatar2.jpg" alt="Paolo B.">\n    <figcaption>In 2 settimane ho creato il mio primo sito. – Paolo B.</figcaption>\n  </figure>\n</section>',
+           instructions: 'Crea una `<section>` con `<h2>` "Cosa dicono i nostri studenti". Dentro due `<figure>` di esempio: prima con `<img>` (src "avatar1.jpg", alt "Studente A") e `<figcaption>` "Esempio di testimonianza — Studente A", seconda con `<img>` (src "avatar2.jpg", alt "Studente B") e `<figcaption>` "Esempio di testimonianza — Studente B".',
+          starterCode: '<!-- Testimonial (contenuti di esempio) -->\n',
+          solution: '<section>\n  <h2>Cosa dicono i nostri studenti</h2>\n  <figure>\n    <img src="avatar1.jpg" alt="Studente A">\n    <figcaption>Esempio di testimonianza — Studente A</figcaption>\n  </figure>\n  <figure>\n    <img src="avatar2.jpg" alt="Studente B">\n    <figcaption>Esempio di testimonianza — Studente B</figcaption>\n  </figure>\n</section>',
           testCases: [
             { expectedOutput: '<figure>' },
             { expectedOutput: '<figcaption>' },
@@ -87,7 +87,7 @@ const content: SeedCourseContent = {
           how: 'Combina le sezioni apprese in un unico documento.',
           instructions: 'Crea una landing page con: `<header>` con h1 e paragrafo + `<a>` CTA "Prenota Ora". `<main>` con: `<section>` features (h2 + ul con 3 li), `<section>` testimonial (h2 + figure con img+figcaption). Infine un `<footer>` con `<section>` CTA finale (h2 "Pronto a iniziare?" + `<a>` "Iscriviti Ora" href "#") e paragrafo "© 2025 StackUp".',
           starterCode: '<!-- Landing page completa -->\n',
-          solution: '<header>\n  <h1>Costruisci il tuo futuro digitale</h1>\n  <p>Impara a creare siti web professionali in 30 giorni</p>\n  <a href="#pricing">Prenota Ora</a>\n</header>\n<main>\n  <section>\n    <h2>Perché sceglierci</h2>\n    <ul>\n      <li>Video HD ad alta risoluzione</li>\n      <li>Accesso illimitato a vita</li>\n      <li>Certificato di completamento</li>\n    </ul>\n  </section>\n  <section>\n    <h2>Cosa dicono i nostri studenti</h2>\n    <figure>\n      <img src="avatar1.jpg" alt="Maria R.">\n      <figcaption>Il corso mi ha cambiato la vita! – Maria R.</figcaption>\n    </figure>\n  </section>\n</main>\n<footer>\n  <section>\n    <h2>Pronto a iniziare?</h2>\n    <a href="#">Iscriviti Ora</a>\n  </section>\n  <p>© 2025 StackUp</p>\n</footer>',
+           solution: '<header>\n  <h1>Costruisci il tuo futuro digitale</h1>\n  <p>Impara a creare siti web professionali in 30 giorni</p>\n  <a href="#pricing">Prenota Ora</a>\n</header>\n<main>\n  <section>\n    <h2>Perché sceglierci</h2>\n    <ul>\n      <li>Video HD ad alta risoluzione</li>\n      <li>Accesso illimitato ai contenuti acquistati</li>\n      <li>Certificato di completamento</li>\n    </ul>\n  </section>\n  <section>\n    <h2>Cosa dicono i nostri studenti</h2>\n    <figure>\n      <img src="avatar1.jpg" alt="Studente A">\n      <figcaption>Esempio di testimonianza — Studente A</figcaption>\n    </figure>\n  </section>\n</main>\n<footer>\n  <section>\n    <h2>Pronto a iniziare?</h2>\n    <a href="#">Iscriviti Ora</a>\n  </section>\n  <p>© 2025 StackUp</p>\n</footer>',
           testCases: [
             { expectedOutput: '<header>' },
             { expectedOutput: '<main>' },

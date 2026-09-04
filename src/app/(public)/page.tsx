@@ -32,8 +32,8 @@ import Badge from "@/components/ui/Badge";
 import { FAQ, SHIP_RESOURCES, GUIDE_CARDS, PATHS, COURSES_PREVIEW } from "@/data/landingData";
 
 function highlightText(text: string) {
-  const greenWords = ['senior engineer', 'certificato', 'superiore al 95%', 'Google', 'Meta', 'Amazon', 'LinkedIn', 'curriculum', 'tasso di placement'];
-  const redWords = ['almeno 6-12 mesi di esperienza', 'alle prime armi', 'basi della programmazione', 'principianti'];
+  const greenWords = ['certificato', 'LinkedIn', 'curriculum', 'community privata', 'progetti guidati'];
+  const redWords: string[] = [];
 
   const escaped = text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const greenPattern = greenWords.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');

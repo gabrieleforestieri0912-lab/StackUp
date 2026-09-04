@@ -173,8 +173,8 @@ const PathsPage = () => {
           >
             {[
               { value: '8', label: 'Percorsi' },
-              { value: '40+', label: 'Corsi totali' },
-              { value: '95%', label: 'Placement rate' },
+              { value: '18', label: 'Corsi' },
+              { value: '100%', label: 'Hands-on' },
               { value: '1:1', label: 'Mentoring' },
             ].map((stat, i) => (
               <div key={i} className="p-6 bg-black/40 border border-zinc-800 rounded-xl text-center">

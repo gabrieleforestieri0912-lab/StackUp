@@ -74,12 +74,12 @@ const Contact: React.FC = () => {
  Siamo pronti ad ascoltare le tue idee e aiutarti a trasformarle in realtà digitale. Che tu sia uno studente, un&apos;azienda o un curioso, scrivici.
  </p>
 
- <div className="space-y-8">
- {[
- { i: <Mail className="text-orange-400" />, t:"Scrivici", v:"info@stackup.it", s:"Rispondiamo entro 24 ore" },
- { i: <MessageSquare className="text-orange-400" />, t:"Community", v:"Discord Server", s:"Supporto istantaneo H24" },
- { i: <MapPin className="text-orange-400" />, t:"Ufficio", v:"Milano, Italia", s:"Disponibili per meeting dal vivo" }
- ].map((item, i) => (
+  <div className="space-y-8">
+  {[
+  { i: <Mail className="text-orange-400" />, t:"Scrivici", v:"info@stackup.it", s:"Rispondiamo in genere entro 24 ore lavorative" },
+  { i: <MessageSquare className="text-orange-400" />, t:"Community", v:"Discord Server", s:"Confronto e supporto dalla community" },
+  { i: <MapPin className="text-orange-400" />, t:"Sede", v:"Milano, Italia", s:"Operiamo da remoto con base a Milano" }
+  ].map((item, i) => (
  <motion.div
  key={i}
  initial={{ opacity: 0, y: 20 }}
